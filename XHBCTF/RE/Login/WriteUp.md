@@ -1,9 +1,11 @@
 #Login
-exe file could be download from [here](https://dn.jarvisoj.com/challengefiles/login.exe.0e043cc84e9273f1e34b6b27330c8e5a)
+
+login.exe file could be download from [here](https://dn.jarvisoj.com/challengefiles/login.exe.0e043cc84e9273f1e34b6b27330c8e5a)
 
 Use pyinstaller extractor, get file:main<.pyc>;
 The main file is a pyObject dumped string file.
 Convert to a normal pycfile(add a pyc file header), reverse it to source code:
+
 ```python 
 # Embedded file name: main.py
 # Compiled at: 2016-08-16 19:36:25
@@ -24,6 +26,7 @@ and rename it to `bccruntime140.dll`or other strings to bypass this bug.
 Remember to put a normal `VCRUNTIME140.dll` file under system's search path.
 
 #Consider
+
 if we use strings to serach `hxbctf` after all binary files were upx-decompressed,
 'python.dll'  reported a string reference to `hxbctf`.
 So, it's had been clear and next step was to reverse core dll.
@@ -31,7 +34,9 @@ And if we use a python front shell`python.exe` to run the core dll, we'll find t
 into this python file.
 
 ##crack
+
 In the dll, segment  position `.text:1E183D20`,it's the major function of the game;
+
 ```c 
 int __cdecl coreCTFfunction(int a1, void *pyobj)
 {
@@ -75,6 +80,7 @@ int __cdecl coreCTFfunction(int a1, void *pyobj)
 
 find out the strings in secKey:`.rdata:1E253040 secrectKey`
 Here is the algorithm :Xor with each inputed char and his index;
+
 ```python 
 sec='Pxvk4kYcIVlJSeO?'
 res=[]
