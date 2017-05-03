@@ -1,4 +1,4 @@
-#Login
+# Login
 
 login.exe file could be download from [here](https://dn.jarvisoj.com/challengefiles/login.exe.0e043cc84e9273f1e34b6b27330c8e5a)
 
@@ -15,7 +15,7 @@ print(hxbctf.Login(0, input('UserName: ')))
 # okay decompiling tryrepair.main.pyc
 ```
 
-##Pre.Bug
+## Pre.Bug
 
 This **Onefile** compressed pyinstaller bootloader has a [bug](https://github.com/pyinstaller/pyinstaller/issues/1565) 
 of unable to run when vcruntime is upx-compressed under 64-bit
@@ -25,7 +25,7 @@ Now  we use 010editor to change the strings in login.exe file,
 and rename it to `bccruntime140.dll`or other strings to bypass this bug.
 Remember to put a normal `VCRUNTIME140.dll` file under system's search path.
 
-#Consider
+# Consider
 
 if we use strings to serach `hxbctf` after all binary files were upx-decompressed,
 'python.dll'  reported a string reference to `hxbctf`.
@@ -33,7 +33,7 @@ So, it's had been clear and next step was to reverse core dll.
 And if we use a python front shell`python.exe` to run the core dll, we'll find that `hxbctf` has been compiled as a built-in module 
 into this python file.
 
-##crack
+## crack
 
 In the dll, segment  position `.text:1E183D20`,it's the major function of the game;
 
@@ -92,7 +92,7 @@ print(''.join(res))
 #got >>>Pyth0n_dA_fA_hA0
 ```
 
-##Result
+## Result
 
 ```python 
 import hxbctf
