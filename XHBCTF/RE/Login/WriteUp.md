@@ -1,10 +1,10 @@
 # Login
 
-login.exe file could be download from [here](https://dn.jarvisoj.com/challengefiles/login.exe.0e043cc84e9273f1e34b6b27330c8e5a)
+<login.exe> file could be download from [here](https://dn.jarvisoj.com/challengefiles/login.exe.0e043cc84e9273f1e34b6b27330c8e5a)
 
-Use pyinstaller extractor, get file:main<.pyc>;
+Use pyinstaller extractor,we get a file: main<.pyc>;
 The main file is a pyObject dumped string file.
-Convert to a normal pycfile(add a pyc file header), reverse it to source code:
+Convert to a normal pycfile(add a pyc file header,4bytes MAGIC_NUMBER,4bytes Timestamp),  reverse it to source code:
 
 ```python 
 # Embedded file name: main.py
@@ -18,22 +18,26 @@ print(hxbctf.Login(0, input('UserName: ')))
 ## Pre.Bug
 
 This **Onefile** compressed pyinstaller bootloader has a [bug](https://github.com/pyinstaller/pyinstaller/issues/1565) 
-of unable to run when vcruntime is upx-compressed under 64-bit
+of unable to run when vcruntime is upx-compressed under 64-bit Windows, which may lead to some errors.
 
 Now  we use 010editor to change the strings in login.exe file,
 `strings login.exe |grep dll`,find the string`bVCRUNTIME140.dll`'s position,
-and rename it to `bccruntime140.dll`or other strings to bypass this bug.
-Remember to put a normal `VCRUNTIME140.dll` file under system's search path.
+and rename it to `bccruntime140.dll`or any other strings to bypass this bug.
+Remember to place a normal `VCRUNTIME140.dll` file under system's search path.
 
 # Consider
 
 if we use strings to serach `hxbctf` after all binary files were upx-decompressed,
-'python.dll'  reported a string reference to `hxbctf`.
+'python.dll' has reported a string reference to `hxbctf`.
 So, it's had been clear and next step was to reverse core dll.
 And if we use a python front shell`python.exe` to run the core dll, we'll find that `hxbctf` has been compiled as a built-in module 
 into this python file.
 
 ## crack
+
+Luckily, the String "Congratulations" is a plain text in .rodata segment.
+
+Locate his usage position:
 
 In the dll, segment  position `.text:1E183D20`,it's the major function of the game;
 
@@ -101,3 +105,7 @@ Password: Pyth0n_dA_fA_hA0
 'Congratulations!\nflag{Pyth0n_dA_fA_hA0}.'
 >>> 
 ```
+
+#Reference
+
+强行动态调试解出:http://bbs.pediy.com/thread-215002.htm
