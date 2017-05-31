@@ -1,10 +1,13 @@
 # Login
 
+## Preprocess
 <login.exe> file could be download from [here](https://dn.jarvisoj.com/challengefiles/login.exe.0e043cc84e9273f1e34b6b27330c8e5a)
 
-Use pyinstaller extractor,we get a file: main<.pyc>;
+Use [pyinstaller extractor](https://sourceforge.net/projects/pyinstallerextractor/) ,we get a file: main<.pyc>;
 The main file is a pyObject dumped string file.
-Convert to a normal pycfile(add a pyc file header,4bytes MAGIC_NUMBER,4bytes Timestamp),  reverse it to source code:
+Convert it to a normal pycfile(add a pyc file header,4bytes MAGIC_NUMBER,4bytes Timestamp),  reverse it to source code:
+
+
 
 ```python 
 # Embedded file name: main.py
@@ -106,6 +109,12 @@ Password: Pyth0n_dA_fA_hA0
 >>> 
 ```
 
-#Reference
+# Reference
 
 强行动态调试解出:http://bbs.pediy.com/thread-215002.htm
+
+
+## 52Pojie
+used for 52pojie submission.
+id:6767
+post tid:612686
